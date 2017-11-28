@@ -7,7 +7,7 @@ http://localhost:8080/users/
 HTTP.POST
 
 {
-  "username":"sunder.thyagarajan@gmail.com",
+  "username":"firstname.lastname@gmail.com",
   "password":"Welcome1"
 }
 
@@ -17,7 +17,7 @@ http://localhost:8080/users/authenticate
 HTTP.POST
 
 {
-  "username":"sunder.thyagarajan@gmail.com.com",
+  "username":"firstname.lastname@gmail.com.com",
   "password":"Welcome1"
 }
 
@@ -29,7 +29,7 @@ Get All Users
 http://localhost:8080/users/
 HTTP.GET
 
-[{"id":1,"username":"sunder.thyagarajan@oracle.com","password":"Welcome1","instances":[{"id":12,"instanceId":"OpenStack12345V","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":null,"instanceType":"WordPress","status":"Create"},{"id":11,"instanceId":"12345V23","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":"2015-07-07 12:00:00","instanceType":"Cirros","status":"Terminated"}]},{"id":13,"username":"ravi.katta@oracle.com","password":"Welcome1","instances":[{"id":14,"instanceId":"OpenStack1234","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":null,"instanceType":"WordPress","status":"Create"},{"id":15,"instanceId":"OpenStack57896","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":null,"instanceType":"WordPress","status":"Create"}]}]
+[{"id":1,"username":"firstname.lastname@gmail.com","password":"Welcome1","instances":[{"id":12,"instanceId":"OpenStack12345V","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":null,"instanceType":"WordPress","status":"Create"},{"id":11,"instanceId":"12345V23","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":"2015-07-07 12:00:00","instanceType":"Cirros","status":"Terminated"}]},{"id":13,"username":"firstname1.lastname1@gmail.com","password":"Welcome1","instances":[{"id":14,"instanceId":"OpenStack1234","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":null,"instanceType":"WordPress","status":"Create"},{"id":15,"instanceId":"OpenStack57896","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":null,"instanceType":"WordPress","status":"Create"}]}]
 
 
 Get All Instances
@@ -66,7 +66,7 @@ HTTP.POST
 }
 
 Get User Specific Instances
-http://localhost:8080/instances/ravi.katta@oracle.com
+http://localhost:8080/instances/firstname1.lastname1@gmail.com
 [{"id":14,"instanceId":"OpenStack1234","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":null,"instanceType":"WordPress","status":"Create"},{"id":15,"instanceId":"OpenStack57896","instanceURL":"http://localhost:7001/connect","createdDate":"2015-07-07 10:00:00","terminatedDate":null,"instanceType":"WordPress","status":"Create"}]
 
 
