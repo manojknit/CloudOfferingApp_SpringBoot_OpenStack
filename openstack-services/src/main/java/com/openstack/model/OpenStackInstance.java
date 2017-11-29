@@ -15,6 +15,7 @@ public class OpenStackInstance {
     private Long id;
     
     private String instanceId;
+    private String instanceName;
     private String instanceURL;
     private String createdDate;
     private String terminatedDate;
@@ -33,6 +34,13 @@ public class OpenStackInstance {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getInstanceName() {
+		return instanceName;
+	}
+	public void setInstanceName(String instanceName) {
+		this.instanceName = instanceName;
 	}
 	public OpenStackUser getUser() {
 		return user;

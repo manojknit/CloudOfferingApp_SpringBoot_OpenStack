@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.openstack.model.OpenStackInstance;
 import com.openstack.model.OpenStackUser;
 import com.openstack.service.InstanceService;
+import com.openstack.service.OpenStackIntanceServiceImpl;
 import com.openstack.service.UserService;
 import com.openstack.util.CustomErrorType;
-import com.openstack.util.CustomMessageType;
+import com.openstack.util.Utility;
 
 
 @RestController
@@ -31,7 +33,12 @@ public class InstanceRestController {
     private InstanceService instanceService;
     @Autowired
     private UserService userService;
-  
+    @Autowired
+    private OpenStackIntanceServiceImpl openStackIntanceServiceImpl;
+    @Value("${openstack.flavor}")
+	private String defaultFlavor;
+    @Value("${openstack.network}")
+	private String defaultNetwork;
 
     public static final Logger logger = LoggerFactory.getLogger(InstanceRestController.class);
 
@@ -73,9 +80,20 @@ public class InstanceRestController {
     // -------------------Create an OpenStackInstance -------------------------------------------
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<?> createUser(@RequestBody OpenStackInstance instance, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<?> createInstance(@RequestBody OpenStackInstance instance, UriComponentsBuilder ucBuilder) {
         logger.info("Creating OpenStackInstance : {}", instance);
         logger.info("openStackInstance User : {}", instance.getUser());
+        String instanceType=instance.getInstanceType();
+		String instanceName=instanceType+"-"+instanceService.getMaxId()+1;
+        String image=instanceType;
+        
+        String instanceId=openStackIntanceServiceImpl.createInstance(instanceName, defaultFlavor, image, defaultNetwork);
+        
+        instance.setInstanceId(instanceId);
+        instance.setInstanceName(instanceName);
+        instance.setInstanceType(instanceType);
+        instance.setStatus("Active");
+        instance.setCreatedDate(Utility.formattedSysDate());
         instanceService.save(instance);
         return new ResponseEntity<OpenStackInstance>(instance, HttpStatus.CREATED);
     }
@@ -83,17 +101,18 @@ public class InstanceRestController {
     // ------------------- Update an OpenStackInstance ------------------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateInstance(@PathVariable("id") Long id, @RequestBody OpenStackInstance instance) {
-        logger.info("Updating OpenStackUser with id {}", id);
-
+    //public ResponseEntity<?> updateInstance(@PathVariable("id") Long id, @RequestBody OpenStackInstance instance) {
+    public ResponseEntity<?> updateInstance(@PathVariable("id") Long id) {
+        logger.info("Updating Instance with id {}", id);
         OpenStackInstance currentInstance = instanceService.findOne(id);
-        currentInstance.setStatus(instance.getStatus());
-        currentInstance.setTerminatedDate(instance.getTerminatedDate());
+        currentInstance.setStatus("Stopped");
+        currentInstance.setTerminatedDate(Utility.formattedSysDate());
         if (currentInstance == null) {
             logger.error("Unable to update. OpenStackInstance with id {} not found.", id);
             return new ResponseEntity<CustomErrorType>(new CustomErrorType("Unable to upate. OpenStackInstance with id " + id + " not found."),
                     HttpStatus.NOT_FOUND);
         }
+        openStackIntanceServiceImpl.stopInstance(currentInstance.getInstanceId());
         instanceService.save(currentInstance);
         return new ResponseEntity<OpenStackInstance>(currentInstance, HttpStatus.OK);
     }
@@ -101,17 +120,21 @@ public class InstanceRestController {
     // ------------------- Delete an OpenStackInstance ------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteFoodItem(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteInstance(@PathVariable("id") Long id) {
         logger.info("Fetching & Deleting OpenStackUser with id {}", id);
 
         OpenStackInstance currentInstance = instanceService.findOne(id);
+        currentInstance.setStatus("Terminated");
+        currentInstance.setTerminatedDate(Utility.formattedSysDate());
         if (currentInstance == null) {
             logger.error("Unable to delete. OpenStackInstance with id {} not found.", id);
             return new ResponseEntity(new CustomErrorType("Unable to delete. OpenStackInstance with id " + id + " not found."),
                     HttpStatus.NOT_FOUND);
         }
-        instanceService.delete(id);
-        return new ResponseEntity<OpenStackUser>(HttpStatus.NO_CONTENT);
+        openStackIntanceServiceImpl.deleteInstance(currentInstance.getInstanceId());
+        //instanceService.delete(id);
+        instanceService.save(currentInstance);
+        return new ResponseEntity<OpenStackInstance>(currentInstance,HttpStatus.OK);
     }
 
     // ------------------- Delete All Users-----------------------------
