@@ -1,0 +1,17 @@
+{
+  "name": "vt app",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Manoj Kumar <erpatel@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

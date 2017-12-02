@@ -1,0 +1,122 @@
+<html>
+        <head>
+          <title>VT</title>
+        
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+          <!-- Latest compiled and minified CSS -->
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        
+          <!-- Optional theme -->
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        
+          <!-- Latest compiled and minified JavaScript -->
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-resource.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/angular-ui-router/1.0.0-rc.1/angular-ui-router.min.js"></script>
+          <script src="/controller/indexct.js"></script>
+        </head>
+          <body ng-app="myApp" ng-controller="myController">
+              <div>
+                    <% if (!user) { %>
+                        <h2>Welcome! Please log in.</h2>
+                        <a href="/login">Log In</a>
+                    <% } else { %>
+                        <h2>Hello, <%= user.displayName %>.</h2>
+                        <a href="/account">Account Info</a></br>
+                        <a href="/logout">Log Out</a>
+                    <% } %>
+              </div>
+              <% if (user) { %>
+              <div class='container'>
+                  <!--Body Content Start-->
+                        <h2>{{ title }}</h2>
+                        <a href="/vt/create" class="btn btn-primary"><span class="glyphicon glyphicon-plus" style="color:white; margin-right:5px;" aria-hidden="true"></span>Create New</a>
+
+                        <div>
+                                <p>The ID is {{greeting.id}}</p>
+                                <p>The content is {{greeting.content}}</p>
+                            </div>
+                            <!--Running Instance-->
+                            <div>
+                                    <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <td colspan="8" style="text-align:right;">
+                                                        <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-plus" style="color:white; margin-right:5px;" aria-hidden="true"></span>Start</a>
+                                                        <a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-equalizer" style="color:white; margin-right:5px;" aria-hidden="true"></span>Stop</a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="active">
+                                                    <th>
+                                                        <span>quote id</span>
+                                                    </th>
+                                                    <th>
+                                                        <span>quote name</span>
+                                                    </th>
+                                                    <th>
+                                                        <span>date requested</span>
+                                                    </th>
+                                                    <th>
+                                                        <span>Product To Buy</span>
+                                                    </th>
+                                                    <th>
+                                                        <span>Requested Price</span>
+                                                    </th>
+                                                    <th>
+                                                        <span>Approved Price</span>
+                                                    </th>
+                                                    <th>
+                                                        <span>Status</span>
+                                                    </th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                             
+                                                    <tr ng-repeat="inst in vtinstences">
+                                                        <td style="width:10%">
+                                                            {{inst.instanceId}}
+                                                        </td>
+                                                        <td style="width:10%">
+                                                            {{inst.instanceName}}
+                                                        </td>
+                                                        <td style="width:20%">
+                                                            {{inst.instanceURL}}
+                                                        </td>
+                                                        <td style="width:10%">
+                                                            {{inst.createdDate}}
+                                                        </td>
+                                                        <td style="width:10%">
+                                                            {{inst.terminatedDate}}
+                                                        </td>
+                                                        <td>
+                                                            {{inst.instanceType}}
+                                                        </td>
+                                                        <td style="width:20%">
+                                                            {{inst.Terminated}}
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    
+                                                                    <td><a class="btn btn-primary" href="/quote/create?quoteid={{quote.quote_id}}&action=display"><span class="glyphicon glyphicon-th-list" style="color:white; margin-right:5px;" aria-hidden="true"></span>Details</a> </td><td><span style="margin-right:5px;"></span></td>
+                                                                  
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                              
+                                            </tbody>
+                                        </table>
+                            </div>
+                <!--Body Content End-->
+              </div>
+              <% } %>
+          </body>
+</html>
