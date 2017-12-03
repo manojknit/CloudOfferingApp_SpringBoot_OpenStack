@@ -13,6 +13,21 @@ angular.module('myApp').controller('myController',function($scope, $http) {
         then(function(response) {
             $scope.vtinstences = response.data;
         });
+
+        $scope.CreateInstance = function(instancetype) {
+            //Post call by param
+            console.log("create wordpress");
+            var payload='{"instanceType":'+angular.toJson(instancetype)+'}';
+            console.log(payload);
+            $http({
+                method : "POST",
+                url : "http://localhost:8080/instances/",
+                data : payload,
+                headers : {
+                    'Content-Type' : 'application/json'
+                }
+            }).then( $scope.status = 'Success');
+        };
         //var day  = Date.now();
-        //$scope.quotes = [{quote_id:1, quote_name:'First Sample Quote.', date_requested: day, request_by_user:'manoj', valid_from:day, valid_to:day, product_to_buy:'test', product_requested_price: 1.10, product_approved_price: 1.20, comment:'my comment', quote_status: 'Approved', approved_date: day, token:'adhlajdadasjld' }];
+       
     });

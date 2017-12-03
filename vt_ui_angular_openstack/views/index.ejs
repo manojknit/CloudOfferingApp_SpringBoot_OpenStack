@@ -20,6 +20,8 @@
           <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-resource.min.js"></script>
           <script src="https://ajax.googleapis.com/ajax/libs/angular-ui-router/1.0.0-rc.1/angular-ui-router.min.js"></script>
           <script src="/controller/indexct.js"></script>
+          <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        
 
           <!-- Layout Style Start-->
               <!-- Custom fonts for this template -->
@@ -32,6 +34,9 @@
 
             <!-- Custom styles for this template -->
             <link href="/css/template.css" rel="stylesheet">
+            <link href="/css/project.css" rel="stylesheet">
+            
+            
             <!-- Layout Style End-->
         </head>
           <body ng-app="myApp" ng-controller="myController" id="page-top">
@@ -108,6 +113,79 @@
           <div class="row">
           <div class="col-md-12">
                 <!--Instance Grid-->
+                <div>
+                        <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td colspan="8" style="text-align:right;">
+                                            <!--<a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-plus" style="color:white; margin-right:5px;" aria-hidden="true"></span>Start</a>
+                                            <a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-equalizer" style="color:white; margin-right:5px;" aria-hidden="true"></span>Stop</a>-->
+                                        </td>
+                                    </tr>
+                                    <tr class="active">
+
+                                        <th>
+                                            <span>Instance Id</span>
+                                        </th>
+                                        <th>
+                                            <span>Name</span>
+                                        </th>
+
+                                        <th>
+                                            <span>Instance URL</span>
+                                        </th>
+                                        <th>
+                                            <span>Created Date</span>
+                                        </th>
+                                        <th>
+                                            <span>Terminated Date</span>
+                                        </th>
+                                        <th>
+                                            <span>Instance Type</span>
+                                        </th>
+
+                                        <th><span>Status</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 
+                                        <tr ng-repeat="inst in vtinstences">
+                                            <td style="width:10%">
+                                                {{inst.instanceId}}
+                                            </td>
+                                            <td style="width:10%">
+                                                {{inst.instanceName}}
+                                            </td>
+                                            <td style="width:20%">
+                                                {{inst.instanceURL}}
+                                            </td>
+                                            <td style="width:10%">
+                                                {{inst.createdDate}}
+                                            </td>
+                                            <td style="width:10%">
+                                                {{inst.terminatedDate}}
+                                            </td>
+                                            <td>
+                                                {{inst.instanceType}}
+                                            </td>
+                                            <td style="width:20%">
+                                                {{inst.Terminated}}
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        
+                                                        <td><a class="btn btn-success" href="/doforInstance/create?instid={{inst.instanceId}}&action=display"><span class="glyphicon glyphicon-ok" style="color:white; margin-right:5px;" aria-hidden="true"></span>Start</a> </td><td><span style="margin-right:5px;"></span></td>
+                                                        <td><a class="btn btn-danger" href="/doforInstance/create?instid={{inst.instanceId}}&action=display"><span class="glyphicon glyphicon-remove" style="color:white; margin-right:5px;" aria-hidden="true"></span>Stop</a> </td><td><span style="margin-right:5px;"></span></td>
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                  
+                                </tbody>
+                            </table>
+                </div>
               </div>
             </div>
 
@@ -121,23 +199,16 @@
               <hr class="star-dark mb-5">
               <div class="row" id="launch">
                 <div class="col-md-6 col-lg-6">
-                  <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-1">
-                    <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-                      <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-                        <i class="fa fa-search-plus fa-3x"></i>
-                      </div>
-                    </div>
-                    <img class="img-fluid" src="img/portfolio/cabin.png" alt="">
+                  <a class="portfolio-item d-block mx-auto" ng-href="CreateInstance('wordpress')">
+                        <div style="text-align: center;"><img class="img-fluid" src="/img/wordpress.png" alt=""></div>
+                    <div style="text-align: center;"><h3>WordPress</h3><div>WordPress is a free and open-source content management system based on PHP and MySQL. To function, WordPress has to be installed on a web server, which would either be part of an Internet hosting service or a network host in its own right.</div></div>
                   </a>
                 </div>
                 <div class="col-md-6 col-lg-6">
-                  <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-2">
-                    <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-                      <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-                        <i class="fa fa-search-plus fa-3x"></i>
-                      </div>
-                    </div>
-                    <img class="img-fluid" src="img/portfolio/cake.png" alt="">
+                  <a class="portfolio-item d-block mx-auto" ng-href="CreateInstance('centos-6')">
+                    
+                    <div style="text-align: center;"><img class="img-fluid" src="/img/cirros.png" alt=""></div>
+                    <div style="text-align: center;"><h3>CirrOS</h3><div>CirrOS is a minimal Linux distribution that was designed for use as a test image on clouds such as OpenStack Compute.</div></div>
                   </a>
                 </div>
               </div>
@@ -150,25 +221,22 @@
           <h2 class="text-center text-uppercase text-white">Usage Dashboard</h2>
           <hr class="star-light mb-5">
           <div class="row">
-          
-          <table class="table">
-            <tbody>
-            <tr>
-                <td colspan=3>
-                    <div id="chart_div_Pie" style="width: 400px; height: 120px;">
-                <!--Pie Chart-->    
+                <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-9">
+                         <!--Pie Chart-->
+                            <div id="chart_div_Pie" style="width: 900px; height: 200px; background-color:#5DBCD2;"></div>
+                        </div>
+                        <div class="col-sm-2"></div>
                 </div>
-                </td>
-                
-            </tr>
-            <tr>
-                
-                <td>chart1</td>
-                <td>Chart2</td>
-                <td>chart3</td>
-            </tr>
-            </tbody>
-        </table>
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4">
+                        <div id="chart_div_guage" style="width: 400px; height: 120px;"></div>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+            </div>
         </div>
       </section>
       
@@ -177,12 +245,16 @@
           <h2 class="text-center text-uppercase text-white">Billing</h2>
           <hr class="star-light mb-5">
           <div class="row">
-            <div class="col-lg-12">
-              <!--Billing-->
-            </div>
             
+              <!--Billing-->
+              <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                            <div id="chart_div_billing" style="width: 800px; height: 600px;"></div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
           </div>
-          
         </div>
       </section>
       
@@ -193,9 +265,8 @@
           <hr class="star-light mb-5">
           <div class="row">
             <div class="col-lg-12">
-              <p class="lead">Console command  <h3><a href="#" style="color:antiquewhite">Run</a></h3></p>
-           
-             
+              <p class="lead">Console command</p>
+             <a href="#"> <div class="console" style="width:900px; height:200px;">C:\Projects\MyWork\codebase>_</div></a>
             </div>
           </div>
         </div>
@@ -317,7 +388,10 @@
 
     <!-- Contact Form JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.7/jqBootstrapValidation.min.js"></script>
-
+    <script src="/js/template.js"></script>
+    <script src="/js/project.js"></script>
+    <script src="/js/billing.js"></script>
+    
               </div>
               <% } %>
           </body>
