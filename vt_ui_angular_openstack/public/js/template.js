@@ -4,7 +4,7 @@ function drawChart() {
   var data = google.visualization.arrayToDataTable([
     ['Task', 'Hours per Day'],
     ['Wordpress',11],
-    ['Cirross',2]
+    ['Cirros',2]
   ]);
 
   var options = {

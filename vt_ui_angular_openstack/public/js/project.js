@@ -38,3 +38,5 @@ function drawChart() {
     chart.draw(data, options);
   }, 26000);
 }
+
+

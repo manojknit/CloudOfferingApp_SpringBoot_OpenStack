@@ -11,7 +11,30 @@ angular.module('myApp').controller('myController',function($scope, $http) {
 
         $http.get('http://localhost:8080/instances/').
         then(function(response) {
-            $scope.vtinstences = response.data;
+            var responsedata = response.data;
+
+            var obj = {a: 1, b: 2};
+            for (var key in responsedata) {
+              //if (responsedataobj.hasOwnProperty(key)) {
+                  var id = responsedata[key].id;
+                  var email = angular.element($('#useremail')).val();
+                if(key%2 == 0)
+                {
+                    responsedata[key].instanceName = "wordpress-"+id;
+                    responsedata[key].instanceURL = email +"-wordpress-"+id+".cloudjibe.com";
+                    responsedata[key].instanceType = "wordpress";
+                //var val = obj[key];
+                //console.log(val);
+                }
+                else{
+                    responsedata[key].instanceName = "cirros-"+id;
+                    responsedata[key].instanceURL = email +"-wordpress-"+id+".cloudjibe.com";
+                    responsedata[key].instanceType = "cirros";
+                }
+              //}
+            }
+
+            $scope.vtinstences = responsedata;
         });
 
         $scope.CreateInstance = function(instancetype) {

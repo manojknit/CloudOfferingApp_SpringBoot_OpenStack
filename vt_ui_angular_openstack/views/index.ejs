@@ -40,6 +40,7 @@
             <!-- Layout Style End-->
         </head>
           <body ng-app="myApp" ng-controller="myController" id="page-top">
+              
                     <nav class="navbar navbar-inverse navbar-fixed-top bg-secondary">
                             <div class="container">
                                 <div class="navbar-header">
@@ -53,6 +54,7 @@
                                 </div>
                                 <div class="navbar-collapse collapse">
                                     <% if (user) { %>
+                                      <input  name="useremail" id = "useremail" type="hidden" value="<%= user.upn %>">
                                     <ul class="nav navbar-nav">
                                             <li><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#home">Home</a></li>
                                             <li><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#compute">Compute Service</a></li>
@@ -170,7 +172,7 @@
                                                 {{inst.instanceType}}
                                             </td>
                                             <td style="width:20%">
-                                                {{inst.Terminated}}
+                                                {{inst.status}}
                                             </td>
                                             <td>
                                                 <table>
@@ -202,14 +204,14 @@
                 <div class="col-md-6 col-lg-6">
                   <a class="portfolio-item d-block mx-auto" ng-href="CreateInstance('wordpress')">
                         <div style="text-align: center;"><img class="img-fluid" src="/img/wordpress.png" alt=""></div>
-                    <div style="text-align: center;"><h3>WordPress</h3><div>WordPress is a free and open-source content management system based on PHP and MySQL. To function, WordPress has to be installed on a web server, which would either be part of an Internet hosting service or a network host in its own right.</div></div>
+                    <div style="text-align: center;"><h3>WordPress</h3><div style="font-size: 18px;">WordPress is a free and open-source content management system based on PHP and MySQL. To function, WordPress has to be installed on a web server, which would either be part of an Internet hosting service or a network host in its own right.</div></div>
                   </a>
                 </div>
                 <div class="col-md-6 col-lg-6">
                   <a class="portfolio-item d-block mx-auto" ng-href="CreateInstance('centos-6')">
                     
                     <div style="text-align: center;"><img class="img-fluid" src="/img/cirros.png" alt=""></div>
-                    <div style="text-align: center;"><h3>CirrOS</h3><div>CirrOS is a minimal Linux distribution that was designed for use as a test image on clouds such as OpenStack Compute.</div></div>
+                    <div style="text-align: center;"><h3>CirrOS</h3><div style="font-size: 18px;">CirrOS is a minimal Linux distribution that was designed for use as a test image on clouds such as OpenStack Compute.</div></div>
                   </a>
                 </div>
               </div>
@@ -233,7 +235,7 @@
                 <div class="row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-4">
-                        <div id="chart_div_guage" style="width: 400px; height: 120px;"></div>
+                        <div id="chart_div_guage" style="width: 400px; height: 120px;" class="hidden"></div>
                     </div>
                     <div class="col-sm-4"></div>
                 </div>
@@ -394,6 +396,10 @@
     <script src="/js/billing.js"></script>
     
               </div>
-              <% } %>
+              <% } else { %>
+                <div class="bg">
+                        <a href="/login" class="centerscr btn btn-primary btn-lg round">Sign in</a>
+                  </div>
+            <% } %>
           </body>
 </html>
